@@ -24,9 +24,8 @@ jobs:
         run: |
           kdt scan \
             --host https://konduktolab.kondukto.local \
-            --token "$KONDUKTO_TOKEN" \
+            --token bzVpdUpqZ1V5WldlYlI2WFZtaDNrVjl4eWZFMFdmYmg5TWxMTkJuSjAzQ1duVmJabVVUZDhqMllUdERm \
             -p KaiMonkey \
             -t checkov \
             --image=ubuntu:latest \
             -b master \
-            --insecure
