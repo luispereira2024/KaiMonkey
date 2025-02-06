@@ -24,7 +24,7 @@ jobs:
         run: |
           kdt scan \
             --host https://konduktolab.kondukto.local \
-            --token bzVpdUpqZ1V5WldlYlI2WFZtaDNrVjl4eWZFMFdmYmg5TWxMTkJuSjAzQ1duVmJabVVUZDhqMllUdERm \
+            --token "$KONDUKTO_TOKEN" \
             -p KaiMonkey \
             -t checkov \
             --image=ubuntu:latest \
@@ -40,7 +40,7 @@ jobs:
             echo "Importing results to Kondukto..."
             kdt import \
               --host https://konduktolab.kondukto.local \
-              --token bzVpdUpqZ1V5WldlYlI2WFZtaDNrVjl4eWZFMFdmYmg5TWxMTkJuSjAzQ1duVmJabVVUZDhqMllUdERm \
+              --token "$KONDUKTO_TOKEN" \
               -p KaiMonkey \
               -t checkov \
               --file results.json  # Ensure the correct file is provided for import
