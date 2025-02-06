@@ -1,26 +1,32 @@
 name: KDT CI
- 
+
 on:
   push:
     branches: [ main ]
   workflow_dispatch:
+
 jobs:
   build:
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v2
-    - name: Setup KDT
-      run:|
-        curl -sSL https://cli.kondukto.io | sh
-        echo "KONDUKTO_HOST=  https://konduktolab.kondukto.local
-        echo "KONDUKTO_TOKEN=${ { secrets.KONDUKTO_SECRETS }}
-   - name: Run a CS scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup KDT
+        run: |
+          curl -sSL https://cli.kondukto.io | sh
+          echo "KONDUKTO_HOST=https://konduktolab.kondukto.local" >> $GITHUB_ENV
+          echo "KONDUKTO_TOKEN=${{ secrets.KONDUKTO_SECRETS }}" >> $GITHUB_ENV
+
+      - name: Run a CS scan
+        env:
+          KONDUKTO_TOKEN: ${{ secrets.KONDUKTO_SECRETS }}
         run: |
           kdt scan \
             --host https://konduktolab.kondukto.local \
-            --token bzVpdUpqZ1V5WldlYlI2WFZtaDNrVjl4eWZFMFdmYmg5TWxMTkJuSjAzQ1duVmJabVVUZDhqMllUdERm \
+            --token "$KONDUKTO_TOKEN" \
             -p KaiMonkey \
             -t checkov \
             --image=ubuntu:latest \
             -b master \
-            --insecure 
+            --insecure
