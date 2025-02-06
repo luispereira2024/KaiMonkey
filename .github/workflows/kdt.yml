@@ -29,3 +29,15 @@ jobs:
             -t checkov \
             --image=ubuntu:latest \
             -b master \
+            --output results.json  # Save results in JSON format
+
+      - name: Import results to Kondukto
+        env:
+          KONDUKTO_TOKEN: ${{ secrets.KONDUKTO_TOKEN }}  # Using GitHub Secrets
+        run: |
+          kdt import \
+            --host https://konduktolab.kondukto.local \
+            --token bzVpdUpqZ1V5WldlYlI2WFZtaDNrVjl4eWZFMFdmYmg5TWxMTkJuSjAzQ1duVmJabVVUZDhqMllUdERm \
+            -p KaiMonkey \
+            -t checkov \
+            --file results.json
