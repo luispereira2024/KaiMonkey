@@ -16,11 +16,11 @@ jobs:
         run: |
           curl -sSL https://cli.kondukto.io | sh
           echo "KONDUKTO_HOST=https://konduktolab.kondukto.local" >> $GITHUB_ENV
-          echo "KONDUKTO_TOKEN=${{ secrets.KONDUKTO_SECRETS }}" >> $GITHUB_ENV
+          echo "KONDUKTO_TOKEN=${{ secrets.KONDUKTO_TOKEN }}" >> $GITHUB_ENV  # Using GitHub Secrets
 
       - name: Run a CS scan
         env:
-          KONDUKTO_TOKEN: ${{ secrets.KONDUKTO_SECRETS }}
+          KONDUKTO_TOKEN: ${{ secrets.KONDUKTO_TOKEN }}  # Using GitHub Secrets
         run: |
           kdt scan \
             --host https://konduktolab.kondukto.local \
@@ -29,6 +29,7 @@ jobs:
             -t checkov \
             --image=ubuntu:latest \
             -b master \
+            --insecure \
             --output results.json  # Save results in JSON format
 
       - name: Import results to Kondukto
